@@ -1,28 +1,36 @@
 
 
 def prefix_is(a)
-	#sort in place
-	a.sort!
+	#sort by word length
+	a = a.sort_by { |i| i.length }
 	#word to compare
-	word_to_compare = a[0].chars
-	a.delete(word_to_compare)
+	prefix = a[0].chars
+	a.delete(a[0])
 	idx = 0
-	prefix = String.new
 
 	
-
 	a.each do |word|
+		idx = 0
 		word.each_char do |letter|
-			if letter == word_to_compare[idx] && idx < word_to_compare.length
-				prefix << letter
-				idx += 1
-				print idx
+			if idx < prefix.length
+				if letter == prefix[idx]
+					idx += 1
+
+				else
+					prefix = prefix.slice(0, idx)
+
+				end
+			else
+				prefix = prefix.slice(0, idx)
 			end
+
 		end
 	end
 	
-	puts prefix
+	print prefix.join("")
 end
 
-a = ['apple', 'ape', 'april']
+#a = ['apple', 'ape', 'april']
+a = ["geeksforgeeks", "geeks", "geek", "geezer"]
+#a = ["apple", "nura"]
 prefix_is(a)
