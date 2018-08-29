@@ -13,19 +13,49 @@ psudocode
 	1:2, 2:3 {2, 3} 1
 	loop through the values and clear the duplicates
 	return what you have left or nil 
+
+
+	1:2, 2:3, 3:1, 4:3
+	key= 3
+	value= 1
+	seen= {2, 3}
+	num_to_return=
+	smallest_num = 1
 =end
 
-def sherlock(*args)
+require 'set'
+
+def find_suspect(*args)
 	counter = Hash.new(0)
 
 	nums = Array.new(args)
 
-	nums.each {|num| counter[num] += 1}
+	least_occurance = 999999999
+	num_to_return = nil
 
-	counter.each do |name, value|
-		
 
+	nums.each {|num| 
+		counter[num] += 1
+	}
+
+	occurances = Hash.new(0)
+
+	counter.each {|key, value|
+		if value <= least_occurance
+			least_occurance = value 
+			num_to_return = key
+		end
+		occurances[value]+=1
+    }
+
+	if occurances[least_occurance] > 1
+		return nil
+	else
+		return num_to_return
+	end	
 end
 
-
-sherlock(1, 1, 2, 2)
+puts find_suspect(1, 2, 3, 4, 2, 2, 1, 4, 4) # => 3
+puts find_suspect(1, 1, 2, 2) # => nil
+puts find_suspect(1, 1, 2, 2, 2) # => 1
+puts find_suspect(1, 2, 3, 4, 4, 3) # => nil
