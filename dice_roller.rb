@@ -1,10 +1,9 @@
 def dice_and_rolls(roll)
-
 	num_of_dice = ''
 	sides_of_dice = ''
 	hit_d = false
 
-	roll.each_char {|char|
+	roll.each_char { |char|
 
 		if char == 'd'
 			hit_d = true
